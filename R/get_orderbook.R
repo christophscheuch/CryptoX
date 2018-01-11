@@ -85,7 +85,11 @@ get_orderbook <- function(exchange = as.character(NA),
     url <- paste0("https://api.gdax.com/products/",
                   substr(asset_pair, 1, 3), "-", substr(asset_pair, 4, 6),
                   "/book?level=2")
-    }
+  }
+
+  if(exchange == "gemini") {
+    url <- paste0("https://api.gemini.com/v1/book/", asset_pair)
+  }
 
   if(exchange == "kraken") {
     url <- "https://api.kraken.com/0/public/Depth?pair=XBTUSD"
@@ -136,6 +140,9 @@ get_orderbook <- function(exchange = as.character(NA),
       timestamp <- as.numeric(parsed[[1]][[1]]$timestamp)
     }
     if (exchange == 'gdax') {
+      timestamp <- as.numeric(Sys.time())
+    }
+    if (exchange == 'gemini') {
       timestamp <- as.numeric(Sys.time())
     }
     if (exchange == 'bitstamp') {
