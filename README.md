@@ -7,7 +7,6 @@ To install the package, run
 ```
 devtools:install_github('ckscheuch/CryptoX')
 library('CryptoX')
-
 ```
 ## Usage
 
