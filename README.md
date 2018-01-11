@@ -15,13 +15,13 @@ library('CryptoX')
 To get orderbook data, simply type e.g.
 
 ```
-get_orderbook(exchange = "coinbase"", asset_pair = "BTCUSD", level = 5)
+get_orderbook(exchange = "gdax"", asset_pair = "BTCUSD", level = 5)
 ```
 
 To store orderbook data use
 
 ```
-store_orderbook(exchange = "coinbase", asset_pair = "BTCUSD", level = 5)
+store_orderbook(exchange = "gdax", asset_pair = "BTCUSD", level = 5)
 ```
 
 The resulting file contains a list with the orderbook of the corresponding exchange (BTC/ USD) up to the first 5 levels (can be adjuted using the level parameter). The files are stored in a subfolder named after the exchange.
@@ -31,13 +31,29 @@ The resulting file contains a list with the orderbook of the corresponding excha
 Currently supported exchanges include
 ```
 supported_exchanges <- c("binance", "bitfinex", "bitflyer", "bitstamp",
-                         "bittrex", "btcc", "cex", "coinbase", "kraken",
+                         "bittrex", "btcc", "cex", "gdax", "kraken",
                          "lykke", "poloniex")
 ```
 Currently supported asset pairs include
 
 ```
-supported_assets <- c("BTCUSD", "ETHUSD")
+supported_assets <- c("BTCUSD", "ETHUSD", "XRPUSD" "LTCUSD")
 ```
 
-Note that Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. Binance, Bittrex, Poloniex).
+Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. Binance, Bittrex, Poloniex). Below is a list of the currently supported exchanges and whether orderbook data for a specific asset pair is available.
+
+| Exchange      | BTCUSD | ETHUSD | XRPUSD | LTCUSD |
+| ------------- |:------:|:------:|:------:|:------:|
+| Binance       |   Yes  |   Yes  |   No   |   Yes  |
+| Bitfinex      |   Yes  |   Yes  |   Yes  |   Yes  |
+| bitFlyer      |   Yes  |   No   |   No   |   No   |
+| Bitstamp      |   Yes  |   No   |   No   |   No   |
+| Bittrex       |   Yes  |   Yes  |   Yes  |   Yes  |
+| BTCC          |   Yes  |   No   |   No   |   Yes  |
+| CeX           |   Yes  |   Yes  |   Yes  |   No   |
+| GDAX          |   Yes  |   Yes  |   No   |   Yes  |
+| Kraken        |   Yes  |   Yes  |   Yes  |   Yes  |
+| Lykke         |   Yes  |   Yes  |   No   |   No   |
+| Poloniex      |   Yes  |   Yes  |   Yes  |   Yes  |
+
+Note: Bitstamp only provides order books for BTCUSD even though trading of other asset pairs is possible.

@@ -1,16 +1,19 @@
 #' Get orderbook
-#' @description This function scraps data from the orderbook API of a number of exchanges
-#' Currently implemented are *bitfinex, coinbase, bitstamp, cex, btcc, binance, bittrex, kraken*, and *bitflyer*
-#' @param exchange str name of the exchange (default = "bitfinex")
-#' @param asset_pair str name of the asset pair (default = "BTCUSD")
+#' @description This function scraps orderbook data from the public API of a host of exchanges
+#' @param exchange str name of the exchange
+#' @param asset_pair str name of the asset pair
 #' @param level Required orderbook level (default = 5, upper bound = 25)
-#' @return List with Timestamp (Unix-format), Ask Side (Price and Quantity), Bid (Price and Quantity)
+#' @return List with timestamp (Unix-format), ask side (price and quantity), bid (price and quantity)
 #' @export
 #' @importFrom jsonlite fromJSON
 
-get_orderbook <- function(exchange = "bitfinex",
-                          asset_pair = "BTCUSD",
+get_orderbook <- function(exchange = as.character(NA),
+                          asset_pair = as.character(NA),
                           level = 5){
+
+  if (is.na(exchange) | is.na(asset_pair)) {
+    stop("Exchange / asset pair not specified!")
+  }
 
   if (!exchange %in% supported_exchanges) {
     stop("Exchange does not exist or is currently not supported!")
@@ -52,8 +55,10 @@ get_orderbook <- function(exchange = "bitfinex",
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     ask <- t(sapply(parsed$result$buy,
                     function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+    ask <- ask[, c(2, 1)]
     bid <- t(sapply(parsed$result$sell,
                     function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+    bid <- bid[, c(2, 1)]
     timestamp <- as.numeric(Sys.time())
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
@@ -76,7 +81,7 @@ get_orderbook <- function(exchange = "bitfinex",
                   substr(asset_pair, 1, 3), "/", substr(asset_pair, 4, 6))
   }
 
-  if(exchange == "coinbase") {
+  if(exchange == "gdax") {
     url <- paste0("https://api.gdax.com/products/",
                   substr(asset_pair, 1, 3), "-", substr(asset_pair, 4, 6),
                   "/book?level=2")
@@ -130,7 +135,7 @@ get_orderbook <- function(exchange = "bitfinex",
     if (exchange == 'bitfinex') {
       timestamp <- as.numeric(parsed[[1]][[1]]$timestamp)
     }
-    if (exchange == 'coinbase') {
+    if (exchange == 'gdax') {
       timestamp <- as.numeric(Sys.time())
     }
     if (exchange == 'bitstamp') {
