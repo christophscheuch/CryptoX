@@ -91,6 +91,22 @@ get_orderbook <- function(exchange = as.character(NA),
     url <- paste0("https://api.gemini.com/v1/book/", asset_pair)
   }
 
+  if (exchange == "hitbtc") {
+    url <- paste0("https://api.hitbtc.com/api/2/public/orderbook/", asset_pair)
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    timestamp <- as.numeric(Sys.time())
+    bid <- t(sapply(parsed$bid,
+                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+    ask <- t(sapply(parsed$ask,
+                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+    result <- list(exchange = exchange,
+                   level = level,
+                   asset_pair = asset_pair,
+                   timestamp = timestamp,
+                   bid = bid,
+                   ask = ask)
+  }
+
   if(exchange == "kraken") {
     url <- "https://api.kraken.com/0/public/Depth?pair=XBTUSD"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
@@ -132,7 +148,7 @@ get_orderbook <- function(exchange = as.character(NA),
                   "&depth=", level)
   }
 
-  if(!exchange %in% c('kraken', 'bittrex', 'lykke')){
+  if(!exchange %in% c('kraken', 'bittrex', 'lykke', 'hitbtc')){
 
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
 

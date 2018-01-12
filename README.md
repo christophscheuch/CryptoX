@@ -32,12 +32,12 @@ Currently supported exchanges include
 ```
 supported_exchanges <- c("binance", "bitfinex", "bitflyer", "bitstamp",
                          "bittrex", "btcc", "cex", "gdax", "gemini",
-                         "kraken", "lykke", "poloniex")
+                          "hitbtc", "kraken", "lykke", "poloniex")
 ```
 Currently supported asset pairs include
 
 ```
-supported_assets <- c("BTCUSD", "ETHUSD", "XRPUSD" "LTCUSD")
+supported_assets <- c("BTCUSD", "ETHUSD", "XRPUSD", "LTCUSD")
 ```
 
 Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. Binance, Bittrex, Poloniex). Below is a list of the currently supported exchanges and whether orderbook data for a specific asset pair is available.
@@ -53,6 +53,7 @@ Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. 
 | CeX           |   Yes  |   Yes  |   Yes  |   No   |
 | Gemini        |   Yes  |   Yes  |   No   |   No   |
 | GDAX          |   Yes  |   Yes  |   No   |   Yes  |
+| HitBTC        |   Yes  |   Yes  |   No   |   Yes  |
 | Kraken        |   Yes  |   Yes  |   Yes  |   Yes  |
 | Lykke         |   Yes  |   Yes  |   No   |   No   |
 | Poloniex      |   Yes  |   Yes  |   Yes  |   Yes  |
