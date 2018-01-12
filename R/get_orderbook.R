@@ -41,10 +41,8 @@ get_orderbook <- function(exchange = as.character(NA),
   }
 
   if(exchange == "bitstamp") {
-    if (asset_pair != "BTCUSD") {
-      stop("Bitstamp only provides order books for BTCUSD!")
-    }
-    url <- "https://www.bitstamp.net/api/order_book"
+    url <- paste0("https://www.bitstamp.net/api/v2/order_book/",
+                  tolower(asset_pair))
   }
 
   if(exchange == "bittrex") {

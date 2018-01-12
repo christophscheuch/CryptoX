@@ -47,7 +47,7 @@ Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. 
 | Binance       |   Yes  |   Yes  |   No   |   Yes  |
 | Bitfinex      |   Yes  |   Yes  |   Yes  |   Yes  |
 | bitFlyer      |   Yes  |   No   |   No   |   No   |
-| Bitstamp      |   Yes  |   No   |   No   |   No   |
+| Bitstamp      |   Yes  |   Yes  |   Yes  |   Yes  |
 | Bittrex       |   Yes  |   Yes  |   Yes  |   Yes  |
 | BTCC          |   Yes  |   No   |   No   |   Yes  |
 | CeX           |   Yes  |   Yes  |   Yes  |   No   |
@@ -57,5 +57,3 @@ Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. 
 | Kraken        |   Yes  |   Yes  |   Yes  |   Yes  |
 | Lykke         |   Yes  |   Yes  |   No   |   No   |
 | Poloniex      |   Yes  |   Yes  |   Yes  |   Yes  |
-
-Note: Bitstamp only provides order books for BTCUSD even though trading of other asset pairs is possible.
