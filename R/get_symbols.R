@@ -35,6 +35,10 @@ get_symbols <- function(exchange = as.character(NA)) {
                                           "[", "product_code")))))
   }
 
+  if (exchange == "bitmex") {
+    symbols = "BTCUSD"
+  }
+
   if (exchange == "bitstamp") {
     url <- "https://www.bitstamp.net/api/v2/trading-pairs-info/"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)

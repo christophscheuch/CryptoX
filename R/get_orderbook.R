@@ -40,6 +40,25 @@ get_orderbook <- function(exchange = as.character(NA),
                   substr(asset_pair, 1, 3), "_", substr(asset_pair, 4, 6))
   }
 
+  if (exchange == "bitmex") {
+    if (asset_pair == "BTCUSD") {
+      url <- paste0("https://www.bitmex.com/api/v1/orderBook/L2?symbol=XBT&depth=", level)
+    }
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    timestamp <- as.numeric(Sys.time())
+    p <- matrix(unlist(parsed), 5, length(parsed))
+    ask <- apply(t(p[c(4, 5), p[3, ] == "Sell"]), 2, as.numeric)
+    ask <- ask[, c(2, 1)]
+    bid <- apply(t(p[c(4, 5), p[3, ] == "Buy"]), 2, as.numeric)
+    bid <- bid[, c(2, 1)]
+    result <- list(exchange = exchange,
+                   asset_pair = asset_pair,
+                   level = level,
+                   timestamp = timestamp,
+                   bid = bid,
+                   ask = ask)
+  }
+
   if(exchange == "bitstamp") {
     url <- paste0("https://www.bitstamp.net/api/v2/order_book/",
                   tolower(asset_pair))
@@ -51,13 +70,13 @@ get_orderbook <- function(exchange = as.character(NA),
                   substr(asset_pair, 4, 6), "T-", substr(asset_pair, 1, 3),
                   "&type=both")
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    timestamp <- as.numeric(Sys.time())
     ask <- t(sapply(parsed$result$buy,
                     function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
     ask <- ask[, c(2, 1)]
     bid <- t(sapply(parsed$result$sell,
                     function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
     bid <- bid[, c(2, 1)]
-    timestamp <- as.numeric(Sys.time())
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
                    level = level,
@@ -146,7 +165,7 @@ get_orderbook <- function(exchange = as.character(NA),
                   "&depth=", level)
   }
 
-  if(!exchange %in% c('kraken', 'bittrex', 'lykke', 'hitbtc')){
+  if(!exchange %in% c("kraken", "bittrex", "lykke", "hitbtc", "bitmex")){
 
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
 
