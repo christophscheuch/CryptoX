@@ -125,12 +125,13 @@ get_orderbook <- function(exchange = as.character(NA),
   }
 
   if(exchange == "kraken") {
-    url <- "https://api.kraken.com/0/public/Depth?pair=XBTUSD"
+    asset_pair <- gsub("BTC", "XBT", asset_pair) #kraken uses XBT ticker for BTC
+    url <- paste0("https://api.kraken.com/0/public/Depth?pair=", asset_pair)
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     timestamp <- as.numeric(Sys.time())
-    ask <- t(sapply(parsed$result$XXBTZUSD$asks,
+    ask <- t(sapply(parsed$result[[1]]$asks,
                     function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
-    bid <- t(sapply(parsed$result$XXBTZUSD$bids,
+    bid <- t(sapply(parsed$result[[1]]$bids,
                     function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,

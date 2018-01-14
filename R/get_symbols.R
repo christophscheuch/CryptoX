@@ -88,7 +88,10 @@ get_symbols <- function(exchange = as.character(NA)) {
   }
 
   if (exchange == "kraken") {
-    stop("Kraken down...")
+    url <- "https://api.kraken.com/0/public/AssetPairs"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    symbols <- sort(as.character(unlist(sapply(parsed$result,
+                                               "[", "altname"))))
   }
 
   if (exchange == "lykke") {
