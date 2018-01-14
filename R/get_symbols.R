@@ -1,7 +1,7 @@
 #' Get symbols
 #' @description This function scraps the symbols from the public API of a host of exchanges
-#' @param exchange str name of the exchange
-#' @return List with symbols tradeable on specific exchange
+#' @param exchange Name of an exchange (e.g. "binance", "kraken", "lykke")
+#' @return Character vector with symbols tradeable on specific exchange
 #' @export
 #' @importFrom jsonlite fromJSON
 

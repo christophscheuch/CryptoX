@@ -1,12 +1,15 @@
 #' Save orderbook
-#' @param exchange str name of the exchange
-#' @param asset_pair str name of the asset pair
+#' @description
+#' @param exchange Name of an exchange (e.g. "binance", "kraken", "lykke")
+#' @param asset_pair Name of an asset pair (e.g. "BTCUSD", "ETHUSD")
 #' @param level Required orderbook level (default = 5, upper bound = 25)
+#' @param filetype Save as *.rds or *.RData
 #' @export
 
 save_orderbook <- function(exchange = as.character(NA),
                            asset_pair = as.character(NA),
-                           level = 5, ob = NA){
+                           level = 5, ob = NA,
+                           filetype = "rds"){
   if(is.na(ob)) {
     ob <- get_orderbook(exchange = exchange,
                         asset_pair = asset_pair,
@@ -14,6 +17,15 @@ save_orderbook <- function(exchange = as.character(NA),
   }
   print(ob)
   dir.create(file.path(exchange), showWarnings = FALSE)
-  save(ob, file = paste0(exchange, "/",
-                         asset_pair, "_orderbook_", ob[[1]], ".RData"))
+
+  if (filetype == "rds") {
+    saveRDS(ob, file = paste0(exchange, "/",
+                              asset_pair, "_orderbook_", ob[[1]], ".rds"))
+  }
+
+  if (filetype == "RData") {
+    save(ob, file = paste0(exchange, "/",
+                              asset_pair, "_orderbook_", ob[[1]], ".RData"))
+  }
+
 }

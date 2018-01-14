@@ -1,9 +1,9 @@
 #' Get orderbook
 #' @description This function scraps orderbook data from the public API of a host of exchanges
-#' @param exchange str name of the exchange
-#' @param asset_pair str name of the asset pair
+#' @param exchange Name of an exchange (e.g. "binance", "kraken", "lykke")
+#' @param asset_pair Name of an asset pair (e.g. "BTCUSD", "ETHUSD")
 #' @param level Required orderbook level (default = 5, upper bound = 25)
-#' @return List with timestamp (Unix-format), ask side (price and quantity), bid (price and quantity)
+#' @return List with exhange name, asset pair, timestamp (Unix-format), ask side (price and quantity), bid (price and quantity)
 #' @export
 #' @importFrom jsonlite fromJSON
 

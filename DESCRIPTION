@@ -2,9 +2,13 @@ Package: CryptoX
 Type: Package
 Title: Easily Extract Orderbooks from Crypto Exchanges
 Version: 0.1.0
-Author: Christoph Scheuch
-Maintainer: Christoph Scheuch <christoph.scheuch@gmail.com>
+Authors@R: c(
+    person("Christoph", "Scheuch", email = "christoph.scheuch@wu.ac.at", role = c("aut", "cre")),
+    person("Stefan", "Voigt", email = "stefan.voigt@wu.ac.at", role = "aut")
+    )
 Description: Simple R wrapper to extract orderbook information from the public APIs of cryptocurrency exchanges.
+Imports: jsonlite
 License: MIT
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.0.1
