@@ -16,3 +16,6 @@ save_orderbook(exchange = as.character(NA), asset_pair = as.character(NA),
 
 \item{filetype}{Save as *.rds or *.RData}
 }
+\description{
+Saves orderbook to local folder
+}

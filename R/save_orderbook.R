@@ -1,5 +1,5 @@
 #' Save orderbook
-#' @description
+#' @description Saves orderbook to local folder
 #' @param exchange Name of an exchange (e.g. "binance", "kraken", "lykke")
 #' @param asset_pair Name of an asset pair (e.g. "BTCUSD", "ETHUSD")
 #' @param level Required orderbook level (default = 5, upper bound = 25)
@@ -20,12 +20,12 @@ save_orderbook <- function(exchange = as.character(NA),
 
   if (filetype == "rds") {
     saveRDS(ob, file = paste0(exchange, "/",
-                              asset_pair, "_orderbook_", ob[[1]], ".rds"))
+                              asset_pair, "_orderbook_", ob$timestamp, ".rds"))
   }
 
   if (filetype == "RData") {
     save(ob, file = paste0(exchange, "/",
-                              asset_pair, "_orderbook_", ob[[1]], ".RData"))
+                              asset_pair, "_orderbook_", ob$timestamp, ".RData"))
   }
 
 }
