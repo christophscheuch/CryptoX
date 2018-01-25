@@ -68,6 +68,19 @@ get_symbols <- function(exchange = as.character(NA)) {
                                                  "[", "symbol2")))))
   }
 
+  if (exchange == "gate") {
+    url <- "http://data.gate.io/api2/1/pairs"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    symbols <- sort(gsub("_", "", unlist(toupper(parsed))))
+  }
+
+  if (exchange == "gatecoin") {
+    url <- "https://api.gatecoin.com/Public/LiveTickers"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    symbols <- sort(gsub("-", "", as.character(unlist(sapply(parsed$tickers,
+                                                             "[", "currencyPair")))))
+  }
+
   if (exchange == "gdax") {
     url <- "https://api.gdax.com/products/"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
@@ -94,6 +107,12 @@ get_symbols <- function(exchange = as.character(NA)) {
                                                "[", "altname"))))
   }
 
+  if (exchange == "liqui") {
+    url <- "https://api.liqui.io/api/3/info"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    symbols <- sort(gsub("_", "", toupper(names(parsed$pairs))))
+  }
+
   if (exchange == "lykke") {
     url <- "https://hft-api.lykke.com/api/AssetPairs"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
@@ -104,6 +123,12 @@ get_symbols <- function(exchange = as.character(NA)) {
     url <- "https://poloniex.com/public?command=returnTicker"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     symbols <- sort(gsub("_", "", names(parsed)))
+  }
+
+  if (exchange == "xbtce") {
+    url <- "https://cryptottlivewebapi.xbtce.net:8443/api/v1/public/symbol"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    symbols <- sort(as.character(unlist(sapply(parsed, "[", "Symbol"))))
   }
 
   return(symbols)

@@ -98,7 +98,16 @@ get_orderbook <- function(exchange = as.character(NA),
                   substr(asset_pair, 1, 3), "/", substr(asset_pair, 4, 6))
   }
 
-  if(exchange == "gdax") {
+  if (exchange == "gate") {
+    url <- paste0("http://data.gate.io/api2/1/orderBook/",
+                  substr(asset_pair, 1, 3), "_", substr(asset_pair, 4, 6), "t")
+  }
+
+  if (exchange == "gatecoin") {
+    url <- paste0("https://api.gatecoin.com/Public/MarketDepth/", asset_pair)
+  }
+
+  if (exchange == "gdax") {
     url <- paste0("https://api.gdax.com/products/",
                   substr(asset_pair, 1, 3), "-", substr(asset_pair, 4, 6),
                   "/book?level=2")
@@ -141,6 +150,25 @@ get_orderbook <- function(exchange = as.character(NA),
                    ask = ask)
   }
 
+  if (exchange == "liqui") {
+    url <- paste0("https://api.liqui.io/api/3/depth/",
+                  tolower(substr(asset_pair, 1, 3)), "_",
+                  tolower(substr(asset_pair, 4, 6)), "t",
+                  "?limit=", level)
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    timestamp <- as.numeric(Sys.time())
+    bid <- t(sapply(parsed[[1]]$bids,
+                    function(x) matrix(as.numeric(unlist(x))))[-3,  1:level])
+    ask <- t(sapply(parsed[[1]]$asks,
+                    function(x) matrix(as.numeric(unlist(x))))[-3,  1:level])
+    result <- list(exchange = exchange,
+                   level = level,
+                   asset_pair = asset_pair,
+                   timestamp = timestamp,
+                   bid = bid,
+                   ask = ask)
+  }
+
   if (exchange == "lykke") {
     url <- paste0("https://hft-api.lykke.com/api/OrderBooks/", asset_pair)
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
@@ -166,12 +194,37 @@ get_orderbook <- function(exchange = as.character(NA),
                   "&depth=", level)
   }
 
-  if(!exchange %in% c("kraken", "bittrex", "lykke", "hitbtc", "bitmex")){
+  if (exchange == "xbtce") {
+    url <- paste0("https://cryptottlivewebapi.xbtce.net:8443/api/v1/public/level2/",
+                  asset_pair)
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    ask <- t(sapply(parsed[[1]]$Asks,
+                        function(x) matrix(as.numeric(unlist(x[x != "Ask"]))))[-3, 1:level])
+    ask <- ask[, c(2, 1)]
+    bid <- t(sapply(parsed[[1]]$Bids,
+                        function(x) matrix(as.numeric(unlist(x[x != "Bid"]))))[-3, 1:level])
+    bid <- bid[, c(2, 1)]
+    result <- list(exchange = exchange,
+                   asset_pair = asset_pair,
+                   level = level,
+                   timestamp = parsed[[1]]$Timestamp,
+                   bid = bid,
+                   ask = ask)
+  }
+
+  if(!exchange %in% c("kraken", "bittrex", "liqui", "lykke", "hitbtc", "bitmex",
+                      "xbtce")){
 
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
 
     if (exchange == 'bitfinex') {
       timestamp <- as.numeric(parsed[[1]][[1]]$timestamp)
+    }
+    if (exchange == "gate") {
+      timestamp <- as.numeric(Sys.time())
+    }
+    if (exchange == "gatecoin") {
+      timestamp <- as.numeric(Sys.time())
     }
     if (exchange == 'gdax') {
       timestamp <- as.numeric(Sys.time())

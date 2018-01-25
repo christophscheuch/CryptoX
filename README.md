@@ -32,8 +32,9 @@ The resulting file contains a list with the orderbook of the corresponding excha
 Currently supported exchanges include
 ```
 supported_exchanges <- c("binance", "bitfinex", "bitflyer", "bitmex", "bitstamp",
-                         "bittrex", "btcc", "cex", "gdax", "gemini", "hitbtc", 
-                         "kraken", "lykke", "poloniex")
+                         "bittrex", "btcc", "cex", "gate", "gatecoin", "gdax", 
+                         "gemini", "hitbtc", "kraken", "liqui", "lykke", 
+                         "poloniex", "xbtce")
 ```
 Currently supported asset pairs include
 
@@ -41,21 +42,25 @@ Currently supported asset pairs include
 supported_assets <- c("BTCUSD", "ETHUSD", "XRPUSD", "LTCUSD")
 ```
 
-Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. Binance, Bittrex, Poloniex). Below is a list of the currently supported exchanges and whether orderbook data for a specific asset pair is available.
+Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. Binance, Bittrex, Liqui, Poloniex). Below is a list of the currently supported exchanges and whether orderbook data for a specific asset pair is available.
 
-| Exchange      | BTCUSD | ETHUSD | XRPUSD | LTCUSD |
-| ------------- |:------:|:------:|:------:|:------:|
-| Binance       |   Yes  |   Yes  |   No   |   Yes  |
-| Bitfinex      |   Yes  |   Yes  |   Yes  |   Yes  |
-| bitFlyer      |   Yes  |   No   |   No   |   No   |
-| BitMEX        |   Yes  |   No   |   No   |   No   |
-| Bitstamp      |   Yes  |   Yes  |   Yes  |   Yes  |
-| Bittrex       |   Yes  |   Yes  |   Yes  |   Yes  |
-| BTCC          |   Yes  |   No   |   No   |   Yes  |
-| CeX           |   Yes  |   Yes  |   Yes  |   No   |
-| Gemini        |   Yes  |   Yes  |   No   |   No   |
-| GDAX          |   Yes  |   Yes  |   No   |   Yes  |
-| HitBTC        |   Yes  |   Yes  |   No   |   Yes  |
-| Kraken        |   Yes  |   Yes  |   Yes  |   Yes  |
-| Lykke         |   Yes  |   Yes  |   No   |   No   |
-| Poloniex      |   Yes  |   Yes  |   Yes  |   Yes  |
+| Exchange                              | BTCUSD | ETHUSD | XRPUSD | LTCUSD |
+| ------------------------------------- |:------:|:------:|:------:|:------:|
+| [Binance](https://www.binance.com/)   |   Yes  |   Yes  |   No   |   Yes  |
+| [Bitfinex](https://www.bitfinex.com/) |   Yes  |   Yes  |   Yes  |   Yes  |
+| [bitFlyer](https://bitflyer.jp/)      |   Yes  |   No   |   No   |   No   |
+| [BitMEX](https://www.bitmex.com/)     |   Yes  |   No   |   No   |   No   |
+| [Bitstamp](https://www.bitstamp.net/) |   Yes  |   Yes  |   Yes  |   Yes  |
+| [Bittrex](https://bittrex.com/)       |   Yes  |   Yes  |   Yes  |   Yes  |
+| [BTCC](https://www.btcc.com/)         |   Yes  |   No   |   No   |   Yes  |
+| [CeX](https://cex.io/)                |   Yes  |   Yes  |   Yes  |   No   |
+| [Gate](https://gate.io/)              |   Yes  |   Yes  |   Yes  |   Yes  |
+| [Gatecoin](https://gatecoin.com/)     |   Yes  |   Yes  |   No   |   Yes  |
+| [Gemini](https://gemini.com/)         |   Yes  |   Yes  |   No   |   No   |
+| [GDAX](https://www.gdax.com/)         |   Yes  |   Yes  |   No   |   Yes  |
+| [HitBTC](https://hitbtc.com/)         |   Yes  |   Yes  |   No   |   Yes  |
+| [Kraken](https://www.kraken.com/)     |   Yes  |   Yes  |   Yes  |   Yes  |
+| [Liqui](https://liqui.io/)            |   Yes  |   Yes  |   No   |   Yes  |
+| [Lykke](https://www.lykke.com/)       |   Yes  |   Yes  |   No   |   No   |
+| [Poloniex](https://poloniex.com/)     |   Yes  |   Yes  |   Yes  |   Yes  |
+| [xBTCe](https://www.xbtce.com/)       |   Yes  |   Yes  |   Yes  |   Yes  |
