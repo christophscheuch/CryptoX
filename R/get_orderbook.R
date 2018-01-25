@@ -71,10 +71,10 @@ get_orderbook <- function(exchange = as.character(NA),
                   "&type=both")
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     timestamp <- as.numeric(Sys.time())
-    ask <- t(sapply(parsed$result$buy,
+    ask <- t(sapply(parsed$result$sell,
                     function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
     ask <- ask[, c(2, 1)]
-    bid <- t(sapply(parsed$result$sell,
+    bid <- t(sapply(parsed$result$buy,
                     function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
     bid <- bid[, c(2, 1)]
     result <- list(exchange = exchange,
