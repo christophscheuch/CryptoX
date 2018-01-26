@@ -5,14 +5,14 @@
 \title{Get orderbook}
 \usage{
 get_orderbook(exchange = as.character(NA), asset_pair = as.character(NA),
-  level = 5)
+  level = 10)
 }
 \arguments{
 \item{exchange}{Name of an exchange (e.g. "binance", "kraken", "lykke")}
 
 \item{asset_pair}{Name of an asset pair (e.g. "BTCUSD", "ETHUSD")}
 
-\item{level}{Required orderbook level (default = 5, upper bound = 25)}
+\item{level}{Required orderbook level (default = 10, upper bound = 25)}
 }
 \value{
 List with exhange name, asset pair, timestamp (Unix-format), ask side (price and quantity), bid (price and quantity)

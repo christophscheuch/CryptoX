@@ -5,14 +5,14 @@
 \title{Save orderbook}
 \usage{
 save_orderbook(exchange = as.character(NA), asset_pair = as.character(NA),
-  level = 5, ob = NA, filetype = "rds")
+  level = 10, ob = NA, filetype = "rds")
 }
 \arguments{
 \item{exchange}{Name of an exchange (e.g. "binance", "kraken", "lykke")}
 
 \item{asset_pair}{Name of an asset pair (e.g. "BTCUSD", "ETHUSD")}
 
-\item{level}{Required orderbook level (default = 5, upper bound = 25)}
+\item{level}{Required orderbook level (default = 10, upper bound = 25)}
 
 \item{filetype}{Save as *.rds or *.RData}
 }

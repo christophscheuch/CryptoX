@@ -2,14 +2,14 @@
 #' @description This function scraps orderbook data from the public API of a host of exchanges
 #' @param exchange Name of an exchange (e.g. "binance", "kraken", "lykke")
 #' @param asset_pair Name of an asset pair (e.g. "BTCUSD", "ETHUSD")
-#' @param level Required orderbook level (default = 5, upper bound = 25)
+#' @param level Required orderbook level (default = 10, upper bound = 25)
 #' @return List with exhange name, asset pair, timestamp (Unix-format), ask side (price and quantity), bid (price and quantity)
 #' @export
 #' @importFrom jsonlite fromJSON
 
 get_orderbook <- function(exchange = as.character(NA),
                           asset_pair = as.character(NA),
-                          level = 5){
+                          level = 10){
 
   if (is.na(exchange) | is.na(asset_pair)) {
     stop("Exchange / asset pair not specified!")
