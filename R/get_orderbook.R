@@ -53,6 +53,16 @@ get_orderbook <- function(exchange = as.character(NA),
     bid <- apply(t(p[c(4, 5), p[3, ] == "Buy"]), 2, as.numeric)
     bid <- bid[, c(2, 1)]
     bid[, 2] <- bid[, 2] / bid[, 1]
+
+    if (nrow(bid) < level) {
+      bid <- rbind(bid,
+                   matrix(rep(as.numeric(NA), (level - nrow(bid)) * 2), ncol = 2))
+    }
+    if (nrow(ask) < level) {
+      ask <- rbind(ask,
+                   matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
+    }
+
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
                    level = level,
@@ -74,11 +84,23 @@ get_orderbook <- function(exchange = as.character(NA),
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     timestamp <- as.numeric(Sys.time())
     ask <- t(sapply(parsed$result$sell,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
     ask <- ask[, c(2, 1)]
+    ask <- ask[1:(min(nrow(ask), level)), ]
     bid <- t(sapply(parsed$result$buy,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
     bid <- bid[, c(2, 1)]
+    bid <- bid[1:(min(nrow(bid), level)), ]
+
+    if (nrow(bid) < level) {
+      bid <- rbind(bid,
+                   matrix(rep(as.numeric(NA), (level - nrow(bid)) * 2), ncol = 2))
+    }
+    if (nrow(ask) < level) {
+      ask <- rbind(ask,
+                   matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
+    }
+
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
                    level = level,
@@ -124,9 +146,21 @@ get_orderbook <- function(exchange = as.character(NA),
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     timestamp <- as.numeric(Sys.time())
     bid <- t(sapply(parsed$bid,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
+    bid <- bid[1:(min(nrow(bid), level)), ]
     ask <- t(sapply(parsed$ask,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
+    ask <- ask[1:(min(nrow(ask), level)), ]
+
+    if (nrow(bid) < level) {
+      bid <- rbind(bid,
+                   matrix(rep(as.numeric(NA), (level - nrow(bid)) * 2), ncol = 2))
+    }
+    if (nrow(ask) < level) {
+      ask <- rbind(ask,
+                   matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
+    }
+
     result <- list(exchange = exchange,
                    level = level,
                    asset_pair = asset_pair,
@@ -141,9 +175,21 @@ get_orderbook <- function(exchange = as.character(NA),
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     timestamp <- as.numeric(Sys.time())
     ask <- t(sapply(parsed$result[[1]]$asks,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
+    ask <- ask[1:(min(nrow(ask), level)), ]
     bid <- t(sapply(parsed$result[[1]]$bids,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
+    bid <- bid[1:(min(nrow(bid), level)), ]
+
+    if (nrow(bid) < level) {
+      bid <- rbind(bid,
+                   matrix(rep(as.numeric(NA), (level - nrow(bid)) * 2), ncol = 2))
+    }
+    if (nrow(ask) < level) {
+      ask <- rbind(ask,
+                   matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
+    }
+
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
                    level = level,
@@ -160,9 +206,19 @@ get_orderbook <- function(exchange = as.character(NA),
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     timestamp <- as.numeric(Sys.time())
     bid <- t(sapply(parsed[[1]]$bids,
-                    function(x) matrix(as.numeric(unlist(x))))[-3,  1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
     ask <- t(sapply(parsed[[1]]$asks,
-                    function(x) matrix(as.numeric(unlist(x))))[-3,  1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
+
+    if (nrow(bid) < level) {
+      bid <- rbind(bid,
+                   matrix(rep(as.numeric(NA), (level - nrow(bid)) * 2), ncol = 2))
+    }
+    if (nrow(ask) < level) {
+      ask <- rbind(ask,
+                   matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
+    }
+
     result <- list(exchange = exchange,
                    level = level,
                    asset_pair = asset_pair,
@@ -176,11 +232,23 @@ get_orderbook <- function(exchange = as.character(NA),
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     timestamp <- as.numeric(Sys.time())
     ask <- abs(t(sapply(parsed[[1]]$Prices,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level]))
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ]))
     ask <- ask[, c(2, 1)]
+    ask <- ask[1:(min(nrow(ask), level)), ]
     bid <- t(sapply(parsed[[2]]$Prices,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
     bid <- bid[, c(2, 1)]
+    bid <- bid[1:(min(nrow(bid), level)), ]
+
+    if (nrow(bid) < level) {
+      bid <- rbind(bid,
+                   matrix(rep(as.numeric(NA), (level - nrow(bid)) * 2), ncol = 2))
+    }
+    if (nrow(ask) < level) {
+      ask <- rbind(ask,
+                   matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
+    }
+
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
                    level = level,
@@ -201,11 +269,23 @@ get_orderbook <- function(exchange = as.character(NA),
                   asset_pair)
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     ask <- t(sapply(parsed[[1]]$Asks,
-                        function(x) matrix(as.numeric(unlist(x[x != "Ask"]))))[-3, 1:level])
+                        function(x) matrix(as.numeric(unlist(x[x != "Ask"]))))[-3, ])
     ask <- ask[, c(2, 1)]
+    ask <- ask[1:(min(nrow(ask), level)), ]
     bid <- t(sapply(parsed[[1]]$Bids,
-                        function(x) matrix(as.numeric(unlist(x[x != "Bid"]))))[-3, 1:level])
+                        function(x) matrix(as.numeric(unlist(x[x != "Bid"]))))[-3, ])
     bid <- bid[, c(2, 1)]
+    bid <- bid[1:(min(nrow(bid), level)), ]
+
+    if (nrow(bid) < level) {
+      bid <- rbind(bid,
+                   matrix(rep(as.numeric(NA), (level - nrow(bid)) * 2), ncol = 2))
+    }
+    if (nrow(ask) < level) {
+      ask <- rbind(ask,
+                   matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
+    }
+
     timestamp <- parsed[[1]]$Timestamp / 1000
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
@@ -255,9 +335,21 @@ get_orderbook <- function(exchange = as.character(NA),
     }
 
     bid <- t(sapply(parsed$bids,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+                  function(x) matrix(as.numeric(unlist(x))))[-3, ])
+    bid <- bid[1:(min(nrow(bid), level)), ]
     ask <- t(sapply(parsed$asks,
-                    function(x) matrix(as.numeric(unlist(x))))[-3, 1:level])
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
+    ask <- ask[1:(min(nrow(ask), level)), ]
+
+    if (nrow(bid) < level) {
+      bid <- rbind(bid,
+                    matrix(rep(as.numeric(NA), (level - nrow(bid)) * 2), ncol = 2))
+    }
+    if (nrow(ask) < level) {
+      ask <- rbind(ask,
+                   matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
+    }
+
     result <- list(exchange = exchange,
                    level = level,
                    asset_pair = asset_pair,
