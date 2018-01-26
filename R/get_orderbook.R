@@ -204,10 +204,11 @@ get_orderbook <- function(exchange = as.character(NA),
     bid <- t(sapply(parsed[[1]]$Bids,
                         function(x) matrix(as.numeric(unlist(x[x != "Bid"]))))[-3, 1:level])
     bid <- bid[, c(2, 1)]
+    timestamp <- parsed[[1]]$Timestamp / 1000
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
                    level = level,
-                   timestamp = parsed[[1]]$Timestamp,
+                   timestamp = timestamp,
                    bid = bid,
                    ask = ask)
   }
@@ -239,7 +240,7 @@ get_orderbook <- function(exchange = as.character(NA),
       timestamp <- as.numeric(parsed$timestamp)
     }
     if (exchange == 'btcc') {
-      timestamp <- as.numeric(parsed$date)
+      timestamp <- as.numeric(parsed$date) / 1000
     }
     if (exchange == 'binance') {
       timestamp <- as.numeric(Sys.time())

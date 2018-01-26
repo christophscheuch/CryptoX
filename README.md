@@ -52,7 +52,7 @@ Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. 
 | [BitMEX](https://www.bitmex.com/)     |   Yes  |   No   |   No   |   No   |
 | [Bitstamp](https://www.bitstamp.net/) |   Yes  |   Yes  |   Yes  |   Yes  |
 | [Bittrex](https://bittrex.com/)       |   Yes  |   Yes  |   Yes  |   Yes  |
-| [BTCC](https://www.btcc.com/)         |   Yes  |   No   |   No   |   Yes  |
+| [BTCC](https://www.btcc.com/)         |   Yes  |   No   |   No   |   No   |
 | [CeX](https://cex.io/)                |   Yes  |   Yes  |   Yes  |   No   |
 | [Gate](https://gate.io/)              |   Yes  |   Yes  |   Yes  |   Yes  |
 | [Gatecoin](https://gatecoin.com/)     |   Yes  |   Yes  |   No   |   Yes  |
