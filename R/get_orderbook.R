@@ -49,8 +49,10 @@ get_orderbook <- function(exchange = as.character(NA),
     p <- matrix(unlist(parsed), 5, length(parsed))
     ask <- apply(t(p[c(4, 5), p[3, ] == "Sell"]), 2, as.numeric)
     ask <- ask[, c(2, 1)]
+    ask[, 2] <- ask[, 2] / ask[, 1]
     bid <- apply(t(p[c(4, 5), p[3, ] == "Buy"]), 2, as.numeric)
     bid <- bid[, c(2, 1)]
+    bid[, 2] <- bid[, 2] / bid[, 1]
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
                    level = level,
