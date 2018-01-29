@@ -67,6 +67,7 @@ get_orderbook <- function(exchange = as.character(NA),
                    asset_pair = asset_pair,
                    level = level,
                    timestamp = timestamp,
+                   timestamp_exchange = as.numeric(NA),
                    bid = bid,
                    ask = ask)
   }
@@ -105,6 +106,7 @@ get_orderbook <- function(exchange = as.character(NA),
                    asset_pair = asset_pair,
                    level = level,
                    timestamp = timestamp,
+                   timestamp_exchange = as.numeric(NA),
                    bid = bid,
                    ask = ask)
   }
@@ -165,6 +167,7 @@ get_orderbook <- function(exchange = as.character(NA),
                    level = level,
                    asset_pair = asset_pair,
                    timestamp = timestamp,
+                   timestamp_exchange = as.numeric(NA),
                    bid = bid,
                    ask = ask)
   }
@@ -194,6 +197,7 @@ get_orderbook <- function(exchange = as.character(NA),
                    asset_pair = asset_pair,
                    level = level,
                    timestamp = timestamp,
+                   timestamp_exchange = as.numeric(NA),
                    bid = bid,
                    ask = ask)
   }
@@ -223,6 +227,7 @@ get_orderbook <- function(exchange = as.character(NA),
                    level = level,
                    asset_pair = asset_pair,
                    timestamp = timestamp,
+                   timestamp_exchange = as.numeric(NA),
                    bid = bid,
                    ask = ask)
   }
@@ -231,6 +236,8 @@ get_orderbook <- function(exchange = as.character(NA),
     url <- paste0("https://hft-api.lykke.com/api/OrderBooks/", asset_pair)
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     timestamp <- as.numeric(Sys.time())
+    timestamp_exchange <- as.numeric(as.POSIXct(parsed[[1]]$Timestamp,
+                                                format = "%Y-%m-%dT  %H:%M:%OS"))
     ask <- abs(t(sapply(parsed[[1]]$Prices,
                     function(x) matrix(as.numeric(unlist(x))))[-3, ]))
     ask <- ask[, c(2, 1)]
@@ -253,6 +260,7 @@ get_orderbook <- function(exchange = as.character(NA),
                    asset_pair = asset_pair,
                    level = level,
                    timestamp = timestamp,
+                   timestamp_exchange = timestamp_exchange,
                    bid = bid,
                    ask = ask)
 
@@ -268,6 +276,8 @@ get_orderbook <- function(exchange = as.character(NA),
     url <- paste0("https://cryptottlivewebapi.xbtce.net:8443/api/v1/public/level2/",
                   asset_pair)
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    timestamp <- as.numeric(Sys.time())
+    timestamp_exchange <- parsed[[1]]$Timestamp / 1000
     ask <- t(sapply(parsed[[1]]$Asks,
                         function(x) matrix(as.numeric(unlist(x[x != "Ask"]))))[-3, ])
     ask <- ask[, c(2, 1)]
@@ -286,11 +296,11 @@ get_orderbook <- function(exchange = as.character(NA),
                    matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
     }
 
-    timestamp <- parsed[[1]]$Timestamp / 1000
     result <- list(exchange = exchange,
                    asset_pair = asset_pair,
                    level = level,
                    timestamp = timestamp,
+                   timestamp_exchange = timestamp_exchange,
                    bid = bid,
                    ask = ask)
   }
@@ -301,37 +311,48 @@ get_orderbook <- function(exchange = as.character(NA),
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
 
     if (exchange == 'bitfinex') {
-      timestamp <- as.numeric(parsed[[1]][[1]]$timestamp)
+      timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(parsed[[1]][[1]]$timestamp)
     }
     if (exchange == "gate") {
       timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(NA)
     }
     if (exchange == "gatecoin") {
       timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(NA)
     }
     if (exchange == 'gdax') {
       timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(NA)
     }
     if (exchange == 'gemini') {
       timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(NA)
     }
     if (exchange == 'bitstamp') {
-      timestamp <- as.numeric(parsed$timestamp)
+      timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(parsed$timestamp)
     }
     if (exchange == 'cex') {
-      timestamp <- as.numeric(parsed$timestamp)
+      timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(parsed$timestamp)
     }
     if (exchange == 'btcc') {
-      timestamp <- as.numeric(parsed$date) / 1000
+      timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(parsed$date) / 1000
     }
     if (exchange == 'binance') {
       timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(NA)
     }
     if (exchange == 'bitflyer') {
       timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(NA)
     }
     if (exchange == "poloniex") {
       timestamp <- as.numeric(Sys.time())
+      timestamp_exchange <- as.numeric(NA)
     }
 
     bid <- t(sapply(parsed$bids,
@@ -354,6 +375,7 @@ get_orderbook <- function(exchange = as.character(NA),
                    level = level,
                    asset_pair = asset_pair,
                    timestamp = timestamp,
+                   timestamp_exchange = timestamp_exchange,
                    bid = bid,
                    ask = ask)
   }
