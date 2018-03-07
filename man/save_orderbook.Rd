@@ -5,7 +5,7 @@
 \title{Save orderbook}
 \usage{
 save_orderbook(exchange = as.character(NA), asset_pair = as.character(NA),
-  level = 10, ob = NA, filetype = "rds")
+  level = 10, ob = NA, filetype = "rds", print.output = FALSE)
 }
 \arguments{
 \item{exchange}{Name of an exchange (e.g. "binance", "kraken", "lykke")}
@@ -15,6 +15,8 @@ save_orderbook(exchange = as.character(NA), asset_pair = as.character(NA),
 \item{level}{Required orderbook level (default = 10, upper bound = 25)}
 
 \item{filetype}{Save as *.rds or *.RData}
+
+\item{print.output}{Should the output be printed to the console (default = FALSE)?}
 }
 \description{
 Saves orderbook to local folder
