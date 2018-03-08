@@ -25,7 +25,7 @@ get_orderbook <- function(exchange = as.character(NA),
 
   if(exchange == "binance") {
     url <- paste0("https://api.binance.com/api/v1/depth?symbol=",
-                  asset_pair, "T&limit=", level)
+                  asset_pair, "T")
   }
 
   if(exchange == "bitfinex") {
