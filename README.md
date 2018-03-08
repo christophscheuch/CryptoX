@@ -17,12 +17,12 @@ get_symbols("lykke")
 
 To get orderbook data, simply type
 ```
-get_orderbook(exchange = "gdax", asset_pair = "BTCUSD", level = 5)
+get_orderbook(exchange = "gdax", asset_pair = "BTCUSD", level = 10)
 ```
 
 To store a list that contains orderbook data use
 ```
-store_orderbook(exchange = "binance", asset_pair = "BTCUSD", level = 5)
+save_orderbook(exchange = "binance", asset_pair = "BTCUSD", level = 10)
 ```
 
 The resulting file contains a list with the orderbook of the corresponding exchange (BTC/ USD) up to the first 5 levels (can be adjuted using the level parameter). The files are stored in a subfolder named after the exchange.
