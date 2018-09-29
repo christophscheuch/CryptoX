@@ -292,13 +292,13 @@ get_orderbook <- function(exchange = as.character(NA),
     timestamp_received <- as.numeric(Sys.time())
     timestamp_exchange <- parsed[[1]]$Timestamp / 1000
     ask <- t(sapply(parsed[[1]]$Asks,
-                        function(x) matrix(as.numeric(unlist(x[x != "Ask"]))))[-3, ])
-    ask <- ask[, c(2, 1)]
-    ask <- ask[1:(min(nrow(ask), level)), ]
+                        function(x) matrix(as.numeric(unlist(x[x != "Asks"]))))[-3, ])
+    ask <- as.matrix(t(ask[, c(2, 1)]))
+    ask <- as.matrix(t(ask[1:(min(nrow(ask), level)), ]))
     bid <- t(sapply(parsed[[1]]$Bids,
-                        function(x) matrix(as.numeric(unlist(x[x != "Bid"]))))[-3, ])
-    bid <- bid[, c(2, 1)]
-    bid <- bid[1:(min(nrow(bid), level)), ]
+                        function(x) matrix(as.numeric(unlist(x[x != "Bids"]))))[-3, ])
+    bid <- as.matrix(t(bid[, c(2, 1)]))
+    bid <- as.matrix(t(bid[1:(min(nrow(bid), level)), ]))
 
     if (nrow(bid) < level) {
       bid <- rbind(bid,
