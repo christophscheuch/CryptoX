@@ -46,21 +46,23 @@ Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. 
 
 | Exchange                              | BTCUSD | ETHUSD | XRPUSD | LTCUSD |
 | ------------------------------------- |:------:|:------:|:------:|:------:|
-| [Binance](https://www.binance.com/)   |   Yes  |   Yes  |   No   |   Yes  |
+| [Binance](https://www.binance.com/)   |   Yes  |   Yes  |   Yes  |   Yes  |
 | [Bitfinex](https://www.bitfinex.com/) |   Yes  |   Yes  |   Yes  |   Yes  |
 | [bitFlyer](https://bitflyer.jp/)      |   Yes  |   No   |   No   |   No   |
 | [BitMEX](https://www.bitmex.com/)     |   Yes  |   No   |   No   |   No   |
 | [Bitstamp](https://www.bitstamp.net/) |   Yes  |   Yes  |   Yes  |   Yes  |
 | [Bittrex](https://bittrex.com/)       |   Yes  |   Yes  |   Yes  |   Yes  |
 | [BTCC](https://www.btcc.com/)         |   Yes  |   No   |   No   |   No   |
-| [CeX](https://cex.io/)                |   Yes  |   Yes  |   Yes  |   No   |
+| [CeX](https://cex.io/)                |   Yes  |   Yes  |   Yes  |   Yes  |
 | [Gate](https://gate.io/)              |   Yes  |   Yes  |   Yes  |   Yes  |
 | [Gatecoin](https://gatecoin.com/)     |   Yes  |   Yes  |   No   |   Yes  |
-| [Gemini](https://gemini.com/)         |   Yes  |   Yes  |   No   |   No   |
+| [Gemini](https://gemini.com/)         |   Yes  |   Yes  |   No   |   Yes  |
 | [GDAX](https://www.gdax.com/)         |   Yes  |   Yes  |   No   |   Yes  |
 | [HitBTC](https://hitbtc.com/)         |   Yes  |   Yes  |   No   |   Yes  |
 | [Kraken](https://www.kraken.com/)     |   Yes  |   Yes  |   Yes  |   Yes  |
 | [Liqui](https://liqui.io/)            |   Yes  |   Yes  |   No   |   Yes  |
-| [Lykke](https://www.lykke.com/)       |   Yes  |   Yes  |   No   |   No   |
+| [Lykke](https://www.lykke.com/)       |   Yes  |   Yes  |   Yes  |   Yes  |
 | [Poloniex](https://poloniex.com/)     |   Yes  |   Yes  |   Yes  |   Yes  |
 | [xBTCe](https://www.xbtce.com/)       |   Yes  |   Yes  |   Yes  |   Yes  |
+
+Note that BitMEX is a derivatives market and not actually spot trading BTCUSD. 
