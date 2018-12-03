@@ -131,6 +131,37 @@ get_orderbook <- function(exchange = as.character(NA),
   if (exchange == "gate") {
     url <- paste0("http://data.gate.io/api2/1/orderBook/",
                   substr(asset_pair, 1, 3), "_", substr(asset_pair, 4, 6), "t")
+    timestamp <- as.numeric(Sys.time())
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    timestamp_received <- as.numeric(Sys.time())
+    timestamp_exchange <- as.numeric(NA)
+
+    bid <- t(sapply(parsed$bids,
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
+    bid <- bid[1:(min(nrow(bid), level)), ]
+    ask <- t(sapply(parsed$asks,
+                    function(x) matrix(as.numeric(unlist(x))))[-3, ])
+    ask <- ask[1:(min(nrow(ask), level)), ]
+    ask <- ask[order(ask[, 1]),]
+
+    if (nrow(bid) < level) {
+      bid <- rbind(bid,
+                   matrix(rep(as.numeric(NA), (level - nrow(bid)) * 2), ncol = 2))
+    }
+    if (nrow(ask) < level) {
+      ask <- rbind(ask,
+                   matrix(rep(as.numeric(NA), (level - nrow(ask)) * 2), ncol = 2))
+    }
+
+    result <- list(exchange = exchange,
+                   level = level,
+                   asset_pair = asset_pair,
+                   timestamp = timestamp,
+                   timestamp_received = timestamp_received,
+                   timestamp_exchange = timestamp_exchange,
+                   bid = bid,
+                   ask = ask)
+
   }
 
   if (exchange == "gatecoin") {
@@ -319,8 +350,8 @@ get_orderbook <- function(exchange = as.character(NA),
                    ask = ask)
   }
 
-  if(!exchange %in% c("kraken", "bittrex", "liqui", "lykke", "hitbtc", "bitmex",
-                      "xbtce")){
+  if(!exchange %in% c("kraken", "bittrex", "liqui", "lykke", "gate", "hitbtc",
+                      "bitmex", "xbtce")){
 
     timestamp <- as.numeric(Sys.time())
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
@@ -329,9 +360,9 @@ get_orderbook <- function(exchange = as.character(NA),
     if (exchange == 'bitfinex') {
       timestamp_exchange <- as.numeric(parsed[[1]][[1]]$timestamp)
     }
-    if (exchange == "gate") {
-      timestamp_exchange <- as.numeric(NA)
-    }
+    # if (exchange == "gate") {
+    #   timestamp_exchange <- as.numeric(NA)
+    # }
     if (exchange == "gatecoin") {
       timestamp_exchange <- as.numeric(NA)
     }
