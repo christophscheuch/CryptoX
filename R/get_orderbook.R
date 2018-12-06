@@ -317,7 +317,7 @@ get_orderbook <- function(exchange = as.character(NA),
 
   if (exchange == "xbtce") {
     url <- paste0("https://cryptottlivewebapi.xbtce.net:8443/api/v1/public/level2/",
-                  asset_pair)
+                  asset_pair, "?depth=", level)
     timestamp <- as.numeric(Sys.time())
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     timestamp_received <- as.numeric(Sys.time())

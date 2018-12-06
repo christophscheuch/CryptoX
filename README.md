@@ -63,6 +63,6 @@ Note: Tether (USDT) is used if the exchange does not offer USD fiat pairs (e.g. 
 | [Liqui](https://liqui.io/)            |   Yes  |   Yes  |   No   |   Yes  |
 | [Lykke](https://www.lykke.com/)       |   Yes  |   Yes  |   Yes  |   Yes  |
 | [Poloniex](https://poloniex.com/)     |   Yes  |   Yes  |   Yes  |   Yes  |
-| [xBTCe](https://www.xbtce.com/)       |   Yes  |   Yes  |   Yes  |   Yes  |
+| [xBTCe](https://www.xbtce.com/)       |   Yes  |   Yes  |   No   |   Yes  |
 
 Note that BitMEX is a derivatives market and not actually spot trading BTCUSD. 
