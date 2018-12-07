@@ -50,10 +50,11 @@ get_orderbook <- function(exchange = as.character(NA),
     p <- matrix(unlist(parsed), 5, length(parsed))
     ask <- apply(t(p[c(4, 5), p[3, ] == "Sell"]), 2, as.numeric)
     ask <- ask[, c(2, 1)]
-    ask[, 2] <- ask[, 2] / ask[, 1]
+    ask[, 2] <- ask[, 2] / ask[, 1] #convert size from usd to bitcoin
+    ask <- ask[order(ask[, 1]),]#ascending sorting
     bid <- apply(t(p[c(4, 5), p[3, ] == "Buy"]), 2, as.numeric)
     bid <- bid[, c(2, 1)]
-    bid[, 2] <- bid[, 2] / bid[, 1]
+    bid[, 2] <- bid[, 2] / bid[, 1] #convert size from usd to bitcoin
 
     if (nrow(bid) < level) {
       bid <- rbind(bid,
