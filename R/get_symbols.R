@@ -107,12 +107,6 @@ get_symbols <- function(exchange = as.character(NA)) {
                                                "[", "altname"))))
   }
 
-  if (exchange == "liqui") {
-    url <- "https://api.liqui.io/api/3/info"
-    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
-    symbols <- sort(gsub("_", "", toupper(names(parsed$pairs))))
-  }
-
   if (exchange == "lykke") {
     url <- "https://hft-api.lykke.com/api/AssetPairs"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)

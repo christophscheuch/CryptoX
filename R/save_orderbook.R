@@ -13,11 +13,13 @@ save_orderbook <- function(exchange = as.character(NA),
                            path = NA,
                            ob = NA,
                            filetype = "rds",
-                           print.output = FALSE) {
+                           print.output = FALSE,
+                           df = FALSE) {
   if(is.na(ob)) {
     ob <- get_orderbook(exchange = exchange,
                         asset_pair = asset_pair,
-                        level = level)
+                        level = level,
+                        df = df)
   }
 
   if (print.output) print(ob)
@@ -32,11 +34,11 @@ save_orderbook <- function(exchange = as.character(NA),
 
   if (filetype == "rds") {
     saveRDS(ob, file = paste0(path, "/",
-                              asset_pair, "_orderbook_", ob$timestamp, ".rds"))
+                              asset_pair, "_orderbook_", ob$ts[1], ".rds"))
   }
 
   if (filetype == "RData") {
     save(ob, file = paste0(path, "/",
-                              asset_pair, "_orderbook_", ob$timestamp, ".RData"))
+                              asset_pair, "_orderbook_", ob$ts[1], ".RData"))
   }
 }
