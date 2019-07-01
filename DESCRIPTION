@@ -1,7 +1,7 @@
 Package: CryptoX
 Type: Package
-Title: Easily Extract Orderbooks from Crypto Exchanges
-Version: 0.1.0
+Title: Extract Orderbooks from Crypto Exchanges
+Version: 0.2.0
 Authors@R: c(
     person("Christoph", "Scheuch", email = "christoph.scheuch@wu.ac.at", role = c("aut", "cre")),
     person("Stefan", "Voigt", email = "stefan.voigt@wu.ac.at", role = "aut")

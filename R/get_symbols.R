@@ -11,7 +11,10 @@ get_symbols <- function(exchange = as.character(NA)) {
     stop("Exchange not specified!")
   }
 
-  if (!exchange %in% supported_exchanges) {
+  if (!exchange %in% c("binance", "bitfinex", "bitflyer", "bitmex", "bitstamp",
+                       "bittrex", "cex", "gate", "coinbasepro",
+                       "gemini", "hitbtc", "kraken", "lykke",
+                       "poloniex", "xbtce")) {
     stop("Exchange does not exist or is currently not supported!")
   }
 

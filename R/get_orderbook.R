@@ -18,11 +18,15 @@ get_orderbook <- function(exchange = as.character(NA),
     stop("Exchange / asset pair not specified!")
   }
 
-  if (!exchange %in% supported_exchanges) {
+  if (!exchange %in% c("binance", "bitfinex", "bitflyer", "bitmex", "bitstamp",
+                       "bittrex", "cex", "gate", "coinbasepro",
+                       "gemini", "hitbtc", "kraken", "lykke",
+                       "poloniex", "xbtce")) {
     stop("Exchange does not exist or is currently not supported!")
   }
 
-  if (!asset_pair %in% supported_assets) {
+  if (!asset_pair %in% c("BTCUSD", "BTCEUR", "ETHUSD", "ETHEUR",
+                         "LTCUSD", "LTCEUR", "XRPUSD", "XRPEUR")) {
     stop("Asset pair does not exist or is currently not supported!")
   }
 
