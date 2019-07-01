@@ -12,6 +12,8 @@ get_orderbook <- function(exchange = as.character(NA),
                           level = 10,
                           df = FALSE){
 
+  ##############################################################################
+  # error messages
   if (is.na(exchange) | is.na(asset_pair)) {
     stop("Exchange / asset pair not specified!")
   }
@@ -24,6 +26,8 @@ get_orderbook <- function(exchange = as.character(NA),
     stop("Asset pair does not exist or is currently not supported!")
   }
 
+  ##############################################################################
+  # api urls
   if(exchange == "binance") {
     url <- paste0("https://api.binance.com/api/v1/depth?symbol=",
                   asset_pair, "T")
@@ -34,9 +38,6 @@ get_orderbook <- function(exchange = as.character(NA),
   }
 
   if(exchange == "bitflyer") {
-    if (!asset_pair %in% c("BTCJPY", "BTCUSD", "ETHBTC", "BCHBTC")) {
-      stop("bitFlyer does not support this asset pair!")
-    }
     url <- paste0("https://api.bitflyer.com/v1/board?product_code=",
                   substr(asset_pair, 1, 3), "_", substr(asset_pair, 4, 6))
   }
@@ -82,9 +83,8 @@ get_orderbook <- function(exchange = as.character(NA),
   }
 
   if(exchange == "bittrex") {
-
     url <- paste0("https://bittrex.com/api/v1.1/public/getorderbook?market=",
-                  substr(asset_pair, 4, 6), "T-", substr(asset_pair, 1, 3),
+                  substr(asset_pair, 4, 6), "-", substr(asset_pair, 1, 3),
                   "&type=both")
     ts <- as.numeric(Sys.time())
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
@@ -170,8 +170,8 @@ get_orderbook <- function(exchange = as.character(NA),
     url <- paste0("https://api.gatecoin.com/Public/MarketDepth/", asset_pair)
   }
 
-  if (exchange == "gdax") {
-    url <- paste0("https://api.gdax.com/products/",
+  if (exchange == "coinbasepro") {
+    url <- paste0("https://api.pro.coinbase.com/products/",
                   substr(asset_pair, 1, 3), "-", substr(asset_pair, 4, 6),
                   "/book?level=2")
   }
@@ -248,7 +248,7 @@ get_orderbook <- function(exchange = as.character(NA),
     ts <- as.numeric(Sys.time())
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     ts_received <- as.numeric(Sys.time())
-    ts_exchange <- as.numeric(as.POSIXct(parsed[[1]]$ts,
+    ts_exchange <- as.numeric(as.POSIXct(parsed[[1]]$Timestamp,
                                                 format = "%Y-%m-%dT  %H:%M:%OS"))
     ask <- abs(t(sapply(parsed[[1]]$Prices,
                     function(x) matrix(as.numeric(unlist(x))))[-3, ]))
@@ -291,7 +291,7 @@ get_orderbook <- function(exchange = as.character(NA),
     ts <- as.numeric(Sys.time())
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     ts_received <- as.numeric(Sys.time())
-    ts_exchange <- parsed[[1]]$ts / 1000
+    ts_exchange <- parsed[[1]]$Timestamp / 1000
     ask <- t(sapply(parsed[[1]]$Asks,
                         function(x) matrix(as.numeric(unlist(x[x != "Asks"]))))[-3, ])
     ask <- as.matrix(t(ask[, c(2, 1)]))
@@ -336,7 +336,7 @@ get_orderbook <- function(exchange = as.character(NA),
     if (exchange == "gatecoin") {
       ts_exchange <- as.numeric(NA)
     }
-    if (exchange == 'gdax') {
+    if (exchange == 'coinbasepro') {
       ts_exchange <- as.numeric(NA)
     }
     if (exchange == 'gemini') {

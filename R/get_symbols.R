@@ -29,14 +29,18 @@ get_symbols <- function(exchange = as.character(NA)) {
   }
 
   if (exchange == "bitflyer") {
-    url <- "https://api.bitflyer.com/v1/getmarkets/usa"
-    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
-    symbols <- sort(gsub("_", "", as.character(unlist(sapply(parsed,
-                                          "[", "product_code")))))
+    url1 <- "https://api.bitflyer.com/v1/getmarkets/usa"
+    parsed1 <- jsonlite::fromJSON(url1, simplifyVector = FALSE)
+    url2 <- "https://api.bitflyer.com/v1/getmarkets/eu"
+    parsed2 <- jsonlite::fromJSON(url2, simplifyVector = FALSE)
+    symbols <- c(sort(gsub("_", "", as.character(unlist(sapply(parsed1,
+                                                               "[", "product_code"))))),
+                 sort(gsub("_", "", as.character(unlist(sapply(parsed2,
+                                                               "[", "product_code"))))))
   }
 
   if (exchange == "bitmex") {
-    symbols = "BTCUSD"
+    symbols <- c("BTCUSD")
   }
 
   if (exchange == "bitstamp") {
@@ -46,7 +50,7 @@ get_symbols <- function(exchange = as.character(NA)) {
                          as.character(unlist(sapply(parsed, "[", "name")))))
   }
 
-  if (exchange == "bttrex") {
+  if (exchange == "bittrex") {
     url <- "https://bittrex.com/api/v1.1/public/getmarkets"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     symbols <- sort(paste0(as.character(unlist(sapply(parsed$result,
@@ -81,8 +85,8 @@ get_symbols <- function(exchange = as.character(NA)) {
                                                              "[", "currencyPair")))))
   }
 
-  if (exchange == "gdax") {
-    url <- "https://api.gdax.com/products/"
+  if (exchange == "coinbasepro") {
+    url <- "https://api.pro.coinbase.com/products/"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     symbols <- sort(gsub("-", "", as.character(unlist(sapply(parsed,
                                                              "[", "id")))))
