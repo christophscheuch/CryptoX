@@ -39,6 +39,6 @@ save_orderbook <- function(exchange = as.character(NA),
 
   if (filetype == "RData") {
     save(ob, file = paste0(path, "/",
-                              asset_pair, "_orderbook_", ob$ts[1], ".RData"))
+                           asset_pair, "_orderbook_", ob$ts[1], ".RData"))
   }
 }

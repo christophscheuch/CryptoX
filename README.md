@@ -31,10 +31,7 @@ The resulting file contains a list with the orderbook of the corresponding excha
 
 Currently supported exchanges include
 ```
-supported_exchanges <- c("binance", "bitfinex", "bitflyer", "bitmex", "bitstamp",
-                         "bittrex", "cex", "gate", "coinbasepro", 
-                         "gemini", "hitbtc", "kraken", "lykke", 
-                         "poloniex", "xbtce")
+supported_exchanges <- c("binance", "bitfinex", "bitflyer", "bitmex", "bitpanda", "bitstamp", "gemini", "hitbtc", "kraken", "lykke", "poloniex", "xbtce")
 ```
 Currently supported asset pairs include
 
@@ -51,6 +48,7 @@ Below is a list of the currently supported exchanges and whether orderbook data 
 | [Bitfinex](https://www.bitfinex.com/)     |   Yes  |  Yes   |  Yes   |  Yes   |  Yes   |   No   |  Yes   |   No   |
 | [bitFlyer](https://bitflyer.jp/)          |   Yes  |  Yes   |   No   |   No   |   No   |   No   |   No   |   No   |
 | [BitMEX](https://www.bitmex.com/)**       |   Yes  |   No   |   No   |   No   |   No   |   No   |   No   |   No   |
+| [Bitpanda](https://exchange.bitpanda.com/)|   Yes* |  Yes   |   No   |  Yes   |   No   |   No   |   No   |   No   |
 | [Bitstamp](https://www.bitstamp.net/)     |   Yes  |  Yes   |   Yes  |  Yes   |  Yes   |  Yes   |  Yes   |  Yes   |
 | [Bittrex](https://bittrex.com/)           |   Yes  |   No   |   Yes  |   No   |  Yes   |   No   |  Yes   |   No   |
 | [CEX.IO](https://cex.io/)                 |   Yes  |  Yes   |  Yes   |  Yes   |  Yes   |   No   |  Yes   |  Yes   |

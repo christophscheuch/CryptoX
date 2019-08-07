@@ -1,20 +1,21 @@
 #' Get symbols
 #' @description This function scraps the symbols from the public API of a host of exchanges
 #' @param exchange Name of an exchange (e.g. "binance", "kraken", "lykke")
+#' @param asset_filter Name of asset or asset pair to filter out of all symbols (e.g. EUR, BTC, ETHUSD)
 #' @return Character vector with symbols tradeable on specific exchange
 #' @export
 #' @importFrom jsonlite fromJSON
 
-get_symbols <- function(exchange = as.character(NA)) {
+get_symbols <- function(exchange = as.character(NA), asset_filter = as.character(NA)) {
 
   if (is.na(exchange)) {
     stop("Exchange not specified!")
   }
 
-  if (!exchange %in% c("binance", "bitfinex", "bitflyer", "bitmex", "bitstamp",
-                       "bittrex", "cex", "gate", "coinbasepro",
-                       "gemini", "hitbtc", "kraken", "lykke",
-                       "poloniex", "xbtce")) {
+  if (!exchange %in% c("binance", "bitfinex", "bitflyer", "bitmex", "bitpanda", "bitstamp",
+                       "bittrex", "bl3p", "cex", "coinbasepro", "exmo", "gate",
+                       "gemini", "hitbtc", "kraken", "latoken", "lykke", "okcoin",
+                       "paymium", "poloniex", "therocktrading", "xbtce")) {
     stop("Exchange does not exist or is currently not supported!")
   }
 
@@ -46,6 +47,14 @@ get_symbols <- function(exchange = as.character(NA)) {
     symbols <- c("BTCUSD")
   }
 
+  if (exchange == "bitpanda") {
+    url <- "https://api.exchange.bitpanda.com/public/v1/instruments"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    base <- unlist(sapply(sapply(parsed, "[", "base"), "[", "code"))
+    quote <- unlist(sapply(sapply(parsed, "[", "quote"), "[", "code"))
+    symbols <- sort(paste0(base, quote))
+  }
+
   if (exchange == "bitstamp") {
     url <- "https://www.bitstamp.net/api/v2/trading-pairs-info/"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
@@ -62,8 +71,8 @@ get_symbols <- function(exchange = as.character(NA)) {
                                                  "[", "BaseCurrency")))))
   }
 
-  if (exchange == "btcc") {
-    symbols <- "BTCUSD"
+  if (exchange == "bl3p") {
+    symbols <- "BTCEUR"
   }
 
   if (exchange == "cex") {
@@ -81,18 +90,17 @@ get_symbols <- function(exchange = as.character(NA)) {
     symbols <- sort(gsub("_", "", unlist(toupper(parsed))))
   }
 
-  if (exchange == "gatecoin") {
-    url <- "https://api.gatecoin.com/Public/LiveTickers"
-    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
-    symbols <- sort(gsub("-", "", as.character(unlist(sapply(parsed$tickers,
-                                                             "[", "currencyPair")))))
-  }
-
   if (exchange == "coinbasepro") {
     url <- "https://api.pro.coinbase.com/products/"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     symbols <- sort(gsub("-", "", as.character(unlist(sapply(parsed,
                                                              "[", "id")))))
+  }
+
+  if (exchange == "exmo") {
+    url <- "https://api.exmo.com/v1/ticker/"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    symbols <- sort(gsub("_", "", names(parsed)))
   }
 
   if(exchange == "gemini") {
@@ -114,10 +122,27 @@ get_symbols <- function(exchange = as.character(NA)) {
                                                "[", "altname"))))
   }
 
+  if (exchange == "latoken") {
+    url <- "https://api.latoken.com/api/v1/MarketData/ticker"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    symbols <- sort(as.character(unlist(sapply(parsed, "[", "symbol"))))
+  }
+
   if (exchange == "lykke") {
     url <- "https://hft-api.lykke.com/api/AssetPairs"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     symbols <- sort(as.character(unlist(sapply(parsed, "[", "Id"))))
+  }
+
+  if (exchange == "okcoin") {
+    url <- "https://www.okcoin.com/api/spot/v3/instruments/ticker"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    symbols <- sort(as.character(unlist(sapply(parsed, "[", "product_id"))))
+    symbols <- gsub("-", "", symbols)
+  }
+
+  if (exchange == "paymium") {
+    symbols <- "BTCEUR"
   }
 
   if (exchange == "poloniex") {
@@ -126,10 +151,21 @@ get_symbols <- function(exchange = as.character(NA)) {
     symbols <- sort(gsub("_", "", names(parsed)))
   }
 
+  if (exchange == "therocktrading") {
+    url <- "https://api.therocktrading.com/v1/funds/tickers"
+    parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+    symbols <- sort(as.character(unlist(sapply(parsed$tickers, "[", "fund_id"))))
+  }
+
   if (exchange == "xbtce") {
     url <- "https://cryptottlivewebapi.xbtce.net:8443/api/v1/public/symbol"
     parsed <- jsonlite::fromJSON(url, simplifyVector = FALSE)
     symbols <- sort(as.character(unlist(sapply(parsed, "[", "Symbol"))))
+  }
+
+  # filter out relevant asset pairs
+  if (!is.na(asset_filter)) {
+    symbols <- symbols[grepl(paste0(asset_filter), symbols)]
   }
 
   return(symbols)

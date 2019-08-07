@@ -18,7 +18,7 @@ get_orderbook <- function(exchange = as.character(NA),
     stop("Exchange / asset pair not specified!")
   }
 
-  if (!exchange %in% c("binance", "bitfinex", "bitflyer", "bitmex", "bitstamp",
+  if (!exchange %in% c("binance", "bitfinex", "bitflyer", "bitmex", "bitpanda", "bitstamp",
                        "bittrex", "cex", "gate", "coinbasepro",
                        "gemini", "hitbtc", "kraken", "lykke",
                        "poloniex", "xbtce")) {
@@ -79,6 +79,17 @@ get_orderbook <- function(exchange = as.character(NA),
                    ts_exchange = as.numeric(NA),
                    bid = bid,
                    ask = ask)
+  }
+
+  if (exchange == "bitpanda") {
+    if (asset_pair == "BTCUSD") {
+      asset_pair <- "BTCUSDT"
+      url <- paste0("https://api.exchange.bitpanda.com/public/v1/order-book/",
+                    substr(asset_pair, 1, 3), "_", substr(asset_pair, 4, 7) , "?level=3")
+    } else {
+      url <- paste0("https://api.exchange.bitpanda.com/public/v1/order-book/",
+                    substr(asset_pair, 1, 3), "_", substr(asset_pair, 4, 6) , "?level=3")
+    }
   }
 
   if(exchange == "bitstamp") {
@@ -334,9 +345,11 @@ get_orderbook <- function(exchange = as.character(NA),
     if (exchange == 'bitfinex') {
       ts_exchange <- as.numeric(parsed[[1]][[1]]$ts)
     }
-    # if (exchange == "gate") {
-    #   ts_exchange <- as.numeric(NA)
-    # }
+
+    if (exchange == "bitpanda") {
+      ts_exchange <- as.numeric(as.POSIXct(parsed$time, format = "%Y-%m-%dT%H:%M:%OS"))
+    }
+
     if (exchange == "gatecoin") {
       ts_exchange <- as.numeric(NA)
     }
