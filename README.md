@@ -48,7 +48,7 @@ Below is a list of the currently supported exchanges and whether orderbook data 
 | [Bitfinex](https://www.bitfinex.com/)     |   Yes  |  Yes   |  Yes   |  Yes   |  Yes   |   No   |  Yes   |   No   |
 | [bitFlyer](https://bitflyer.jp/)          |   Yes  |  Yes   |   No   |   No   |   No   |   No   |   No   |   No   |
 | [BitMEX](https://www.bitmex.com/)**       |   Yes  |   No   |   No   |   No   |   No   |   No   |   No   |   No   |
-| [Bitpanda](https://exchange.bitpanda.com/)|   Yes* |  Yes   |   No   |  Yes   |   No   |   No   |   No   |   No   |
+| [Bitpanda](https://exchange.bitpanda.com/)|   Yes* |  Yes   |   No   |  Yes   |   No   |   No   |   No   |  Yes   |
 | [Bitstamp](https://www.bitstamp.net/)     |   Yes  |  Yes   |   Yes  |  Yes   |  Yes   |  Yes   |  Yes   |  Yes   |
 | [Bittrex](https://bittrex.com/)           |   Yes  |   No   |   Yes  |   No   |  Yes   |   No   |  Yes   |   No   |
 | [CEX.IO](https://cex.io/)                 |   Yes  |  Yes   |  Yes   |  Yes   |  Yes   |   No   |  Yes   |  Yes   |
