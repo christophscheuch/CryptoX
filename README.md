@@ -5,8 +5,8 @@ Simple R wrapper for public APIs of cryptocurrency exchanges to extract orderboo
 To install the package, run
 
 ```
-devtools::install_github("ckscheuch/CryptoX")
-library("CryptoX")
+devtools::install_github("christophscheuch/CryptoX")
+library(CryptoX)
 ```
 ## Usage
 
@@ -17,7 +17,7 @@ get_symbols("lykke")
 
 To get orderbook data, simply type
 ```
-get_orderbook(exchange = "gdax", asset_pair = "BTCUSD", level = 10)
+get_orderbook(exchange = "coinbasepro", asset_pair = "BTCUSD", level = 10)
 ```
 
 To store a list that contains orderbook data use
